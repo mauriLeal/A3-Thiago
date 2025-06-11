@@ -1,0 +1,296 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+/* Cabeçalho */
+header {
+  background-color: #ffffff;
+  padding: 15px;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-container .logo img {
+  width: 120px;
+}
+
+header nav ul {
+  display: flex;
+  gap: 15px;
+}
+
+header nav ul li {
+  list-style: none;
+}
+
+header nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+header .login-cadastro a {
+  color: white;
+  margin-left: 15px;
+  text-decoration: none;
+}
+
+/* Seção Restaurante */
+.restaurant-info {
+  display: flex;
+  align-items: center; /* Alinha verticalmente os itens */
+  justify-content: space-between; /* Alinha horizontalmente */
+  padding: 20px;
+}
+
+
+.restaurant-info .restaurant-details {
+  max-width: 50%;
+  text-align: center;
+  justify-content: center;
+  
+}
+
+.restaurant-info h1 {
+  font-size: 2em;
+  color: #333;
+}
+
+.restaurant-info p {
+  color: #777;
+}
+
+.restaurant-logo {
+  display: flex;
+  justify-content: center; /* Alinha horizontalmente */
+  align-items: center; /* Alinha verticalmente */
+  height: 100%; /* Certifique-se de que o contêiner tenha altura */
+}
+.restaurant-logo img {
+  width: 300px;  /* Ajuste conforme necessário */
+  height: auto; 
+  justify-content: center; /* Mantém a proporção da imagem */
+  align-items: center;
+}
+
+/* Menu */
+.menu {
+  padding: 20px;
+  background-color: white;
+}
+
+.menu h2 {
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.menu-items {
+  display: flex;
+  gap: 20px;
+}
+
+.menu-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 15px;
+  width: 30%;
+  text-align: center;
+}
+
+.menu-item img {
+  width: 100%;
+  height: auto;
+}
+
+.menu-item h3 {
+  color: #333;
+  margin: 10px 0;
+}
+
+.menu-item p {
+  color: #555;
+  font-size: 0.9em;
+}
+
+.menu-item span {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+}
+
+.menu-item button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.menu-item button:hover {
+  background-color: #45a049;
+}
+
+.menu-item img[alt="Icone Carrinho"] {
+  width: 20px; /* Ajuste conforme o tamanho desejado */
+  height: auto; /* Mantém a proporção da imagem */
+  vertical-align: middle; /* Alinha a imagem verticalmente com o texto ao lado */
+  margin-right: 5px; /* Ajuste o espaço entre a imagem e o texto */
+  
+}
+
+/* Carrinho */
+.cart {
+  background-color: #fff;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.cart h2 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.cart-details {
+  margin-bottom: 20px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.cart-item span {
+  font-weight: bold;
+}
+
+.cart-total {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.cart-total p {
+  margin-bottom: 10px;
+}
+
+ /* Footer */
+  .footer {
+    background-color: #f1f1f1;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 2rem;
+    gap: 2rem;
+  }
+
+  .footer img {
+  width: 250px; /* Ajusta o tamanho da logo no rodapé */
+  height: auto; /* Mantém a proporção */
+  
+}
+  .footer-col {
+    min-width: 220px;
+  }
+  
+  .footer-col h4 {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: #45a049;
+  }
+  
+  .footer-col ul {
+    list-style: none;
+  }
+  
+  .footer-col ul li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer-col ul li a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .footer input[type="email"] {
+    padding: 0.4rem;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+  }
+    footer .footer-col .btn.verde {
+    background-color: #4CAF50; 
+    color: white; 
+    padding: 10px 20px; /* Espaçamento interno do botão */
+    border: none; 
+    border-radius: 20px; 
+    cursor: pointer; /* Mostra um cursor de mão quando passa por cima */
+    font-size: 16px; /* Tamanho da fonte */
+    background-color: #028643;
+    transition:  0.3s ease; /* Efeito de transição ao passar o mouse */}
+
+    .carrinho-lateral {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 320px;
+    height: 100%;
+    background: #fff;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    transition: right 0.3s ease;
+    z-index: 1000;
+  }
+  
+  .carrinho-lateral.aberto {
+    right: 0;
+  }
+  
+  .carrinho-lateral ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 1rem;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  
+  .carrinho-lateral li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+  }
+  .entrega-msg {
+    font-size: 0.95rem;
+    color: #555;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .card-nome a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+  }
+  
+  .card-nome a:hover {
+    text-decoration: underline;
+    color: #028643; /* ou a cor verde do seu tema */
+  }

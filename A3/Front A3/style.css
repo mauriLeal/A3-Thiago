@@ -1,0 +1,390 @@
+/* Reset e base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  body {
+    background-color: #fff;
+    color: #333;
+    line-height: 1.6;
+    
+  }
+  
+  .container {
+    max-width: 1200px;
+    height: 30px;
+    margin: 0 auto;
+    padding-top: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+.logo img {
+  width: 150px; /* Ajuste o tamanho da logo conforme necessário */
+  height: auto; /* Mantém a proporção */
+  
+}
+
+  /* Header */
+  header {
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 2;
+    position: relative; /* Relativo para não interferir na logo */
+    z-index: 1; /* Garante que o header não sobreponha a logo */
+    margin-top: 0px; /* Aumente a distância para que o conteúdo não sobreponha a logo */
+  }
+  
+  header nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none
+    
+  }
+  
+  header nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  .header-actions .btn {
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    
+  }
+  
+  .btn.verde {
+    background-color: #028643;
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  .btn.adicionar {
+    background-color: #028643;
+    color: #fff;
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  
+  /* Hero */
+  .hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    background-color: #ffffff;
+  }
+  
+  .hero-content {
+    max-width: 600px;
+  }
+  
+  .hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-content .highlight {
+    color: #00C569;
+  }
+  
+  .hero-content p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero-img img {
+    max-width: 500px;
+    border-radius: 12px;
+  }
+  
+  /* Ofertas */
+  .ofertas {
+    padding: 2rem;
+    background-color: #fff;
+  }
+  
+  .ofertas h2 {
+    margin-bottom: 1rem;
+  }
+  
+  .carrossel {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+  }
+  
+  .oferta {
+  overflow: hidden;
+  min-width: 60px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  position: relative;
+  flex: 1 1 300px; /* Faz os cards se adaptarem ao tamanho do container */
+}
+
+  
+  .oferta img {
+  width: 100%; /* Garante que a imagem ocupe 100% da largura do card */
+  height: 250px; /* Define uma altura fixa para todas as imagens */
+  object-fit: cover; /* Faz com que a imagem ocupe o espaço sem deformar */
+  border-radius: 8px; /* Se você tiver bordas arredondadas nos cards */
+  transition: transform 0.6s ease;
+}
+
+
+.oferta:hover img {
+  transform: scale(1.08);
+  cursor: pointer;}
+
+.titulo-oferta {
+  color: #03081F;
+  text-align: center;
+  font-weight: bold;
+}
+
+  .tag {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background-color: #03081F;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+  }
+
+  .btn-carrinho {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 15px;
+  font-size: 15px;
+  margin-left: auto;
+  margin-right: 5px;
+  z-index: 2;
+}
+
+.btn-carrinho img {
+  width: 18px;
+}
+
+
+@media (max-width: 600px) {
+  .ofertas {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }}
+  
+  /* Categorias */
+  .categorias {
+    padding: 2rem;
+    background-color: #f9f9f9;
+  }
+  
+  .categorias-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    text-align: center;
+    margin-top: 1rem;
+    overflow: hidden;
+  }
+  
+  .categoria img {
+    transition: transform 0.5s ease;
+    width: 200px;
+    margin-bottom: 0.5rem;
+  }
+  .categoria:hover img {
+      transform: scale(1.05);
+      cursor: pointer;
+  }
+  
+  /* Restaurantes */
+  .restaurantes {
+    padding: 2rem;
+  }
+  
+  .restaurantes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 1rem;
+  }
+  
+  .card {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    padding-bottom: 1rem;
+  }
+  
+ .card-img {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+  
+  .card-nome {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background-color: rgba(255, 255, 255, 0.6);
+    color: #000000;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+  
+  .card p {
+    padding: 0 1rem;
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+  }
+  
+  .card .preco {
+    display: block;
+    padding: 0 1rem;
+    margin: 0.5rem 0;
+    font-weight: bold;
+  }
+  
+  /* Footer */
+  .footer {
+    background-color: #f1f1f1;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 2rem;
+    gap: 2rem;
+  }
+
+  .footer img {
+  width: 250px; /* Ajusta o tamanho da logo no rodapé */
+  height: auto; /* Mantém a proporção */
+  
+}
+  .footer-col {
+    min-width: 220px;
+  }
+  
+  .footer-col h4 {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+  
+  .footer-col ul {
+    list-style: none;
+  }
+  
+  .footer-col ul li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer-col ul li a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .footer input[type="email"] {
+    padding: 0.4rem;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .bottom-bar {
+    text-align: center;
+    padding: 1rem;
+    background-color: #e0e0e0;
+    font-size: 0.85rem;
+    color: #555;
+  }
+  .carrinho-lateral {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 320px;
+    height: 100%;
+    background: #fff;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    transition: right 0.3s ease;
+    z-index: 1000;
+  }
+  
+  .carrinho-lateral.aberto {
+    right: 0;
+  }
+  
+  .carrinho-lateral ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 1rem;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  
+  .carrinho-lateral li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+  }
+  .entrega-msg {
+    font-size: 0.95rem;
+    color: #555;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .card-nome a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+  }
+  
+  .card-nome a:hover {
+    text-decoration: underline;
+    color: #028643; /* ou a cor verde do seu tema */
+  }

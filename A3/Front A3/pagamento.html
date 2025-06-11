@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagamento - Yummy</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main style="max-width: 600px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 0 10px #eee; padding: 2rem;">
+    <h2 style="color: #028643; text-align: center;">Pagamento</h2>
+    <form id="form-pagamento">
+      <label for="forma">Forma de Pagamento</label>
+      <select id="forma" required>
+        <option value="">Selecione</option>
+        <option value="credito">Cartão de Crédito</option>
+        <option value="pix">Pix</option>
+        <option value="dinheiro">Dinheiro na Entrega</option>
+      </select>
+
+      <div id="dados-cartao" style="display: none;">
+        <label for="numero">Número do Cartão</label>
+        <input type="text" id="numero" maxlength="19" placeholder="0000 0000 0000 0000">
+
+        <label for="nome-cartao">Nome no Cartão</label>
+        <input type="text" id="nome-cartao" placeholder="Como está no cartão">
+
+        <label for="validade">Validade</label>
+        <input type="text" id="validade" maxlength="5" placeholder="MM/AA">
+
+        <label for="cvv">CVV</label>
+        <input type="text" id="cvv" maxlength="4" placeholder="123">
+      </div>
+
+      <div id="dados-pix" style="display: none;">
+        <label>Código Pix:</label>
+        <input type="text" id="pix-copia" value="00020126360014BR.GOV.BCB.PIX0114+5599999999995204000053039865405100.005802BR5920Yummy Restaurante6009SAO PAULO62140510PIX12345678" readonly>
+        <button type="button" onclick="copiarPix()">Copiar Código Pix</button>
+      </div>
+
+      <div id="dados-dinheiro" style="display: none;">
+        <label for="troco">Troco para quanto?</label>
+        <input type="number" id="troco" min="0" placeholder="Ex: 100.00">
+      </div>
+
+      <label for="observacao">Observações (opcional)</label>
+      <textarea id="observacao" rows="2" placeholder="Ex: Entregar na portaria"></textarea>
+
+      <h3 style="margin-top: 2rem;">Resumo do Pedido</h3>
+      <div id="resumo-pedido">
+        <!-- Itens do pedido serão inseridos aqui -->
+        <div id="itens-pedido"></div>
+        <p>Subtotal: <span id="subtotal">R$0,00</span></p>
+        <p>Entrega: <span id="entrega">R$5,00</span></p>
+        <p><strong>Total: <span id="total">R$0,00</span></strong></p>
+      </div>
+
+      <button type="submit" class="btn verde" style="margin-top: 1.5rem; width: 100%;">Finalizar Pedido</button>
+    </form>
+  </main>
+
+  <script>
+    function copiarPix() {
+      const pixInput = document.getElementById('pix-copia');
+      pixInput.select();
+      document.execCommand('copy');
+      alert('Código Pix copiado!');
+    }
+
+    document.getElementById('forma').addEventListener('change', function() {
+      document.getElementById('dados-cartao').style.display = this.value === 'credito' ? 'block' : 'none';
+      document.getElementById('dados-pix').style.display = this.value === 'pix' ? 'block' : 'none';
+      document.getElementById('dados-dinheiro').style.display = this.value === 'dinheiro' ? 'block' : 'none';
+    });
+
+    // Função para carregar o carrinho do usuário logado
+    function carregarCarrinho() {
+      const usuario = JSON.parse(localStorage.getItem('usuario'));
+      if (usuario) {
+        return JSON.parse(localStorage.getItem(`carrinho_${usuario.id}`)) || [];
+      }
+      return [];
+    }
+
+    // Exibe o resumo do pedido
+    function exibirResumoCarrinho() {
+      const carrinho = carregarCarrinho();
+      let subtotal = 0;
+      let itensHtml = '';
+      carrinho.forEach(item => {
+        subtotal += item.preco * item.qtd;
+        itensHtml += `<p>${item.qtd}x ${item.nome} - R$${(item.preco * item.qtd).toFixed(2)}</p>`;
+      });
+      const entrega = 5.00;
+      const total = subtotal + entrega;
+
+      document.getElementById('itens-pedido').innerHTML = itensHtml || '<p>Nenhum item no carrinho.</p>';
+      document.getElementById('subtotal').textContent = `R$${subtotal.toFixed(2)}`;
+      document.getElementById('entrega').textContent = `R$${entrega.toFixed(2)}`;
+      document.getElementById('total').textContent = `R$${total.toFixed(2)}`;
+    }
+
+    // Chama ao carregar a página
+    exibirResumoCarrinho();
+
+    document.getElementById('form-pagamento').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Limpa o carrinho do usuário logado
+      const usuario = JSON.parse(localStorage.getItem('usuario'));
+      if (usuario) {
+        localStorage.removeItem(`carrinho_${usuario.id}`);
+      }
+      alert('Pedido realizado com sucesso!');
+      // Redirecionar se desejar
+      // window.location.href = 'home.html';
+    });
+  </script>
+</body>
+</html>

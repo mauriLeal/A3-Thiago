@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yummy - Delivery</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo">
+        <img src="img/logo.png" alt="Yummy Logo">
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#categorias">Categorias</a></li>
+          <li><a href="#restaurantes">Restaurantes</a></li>
+          <li><a href="#informacoes">Informações</a></li>
+        </ul>
+      </nav>
+
+     <div class="header-actions">
+  <span id="nome-usuario" style="font-weight:bold; margin-right:1rem;"></span>
+  <a href="formularios/login.html" class="btn login">Login</a>
+  <a href="formularios/cadastro.html" class="btn cadastro">Cadastrar</a>
+  <button class="btn-carrinho" onclick="abrirCarrinho()">
+    🛒 Carrinho <span id="contador-carrinho">0</span>
+  </button>
+  <button id="btn-logout" class="btn" style="display:none; margin-left:1rem;">Sair</button>
+</div>
+</header>
+
+  
+
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+      <h1>Comidas <span class="highlight">Deliciosas</span>, <br>Pertinho de Você!</h1>
+      <p>Peça agora e aproveite ofertas imperdíveis.</p>
+      
+    </div>
+    <div class="hero-img">
+      <img src="img/hero1.png" alt="Pessoa comendo pizza">
+    </div>
+  </section>
+
+  <section class="ofertas">
+    <h2>Abaixou para -40%! 🤑 Ofertas exclusivas no Yummy!</h2>
+    <div class="carrossel">
+      <div class="oferta">
+        <img src="img/hamburguer.jpg" alt="Hambúrguer">
+        <div class="tag">-30%</div>
+        <p class ="titulo-oferta">Hambúrguer</p>
+      </div>
+
+      <div class="oferta">
+        <img src="img/marmita.jpg" alt="Marmita Fit">
+        <div class="tag">-15%</div>
+        <p class = "titulo-oferta">Marmita Fit</p>
+      </div>
+      <div class="oferta">
+        <img src="img/sabores-pizza.jpg" alt="Pizza">
+        <div class="tag">-20%</div>
+        <p class = "titulo-oferta">Pizzas</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="categorias" id="categorias">
+    <h2>Categorias Populares no Yummy 🍕</h2>
+    <div class="categorias-grid">
+      <div class="categoria"><img src="img/hamburguer-icon.png" alt="Hambúrguer"><p>Hambúrguer</p></div>
+      <div class="categoria"><img src="img/marmita-icon.png" alt="Marmita"><p>Marmita</p></div>
+      <div class="categoria"><img src="img/fastfoods-icon.png" alt="FastFoods"><p>Fast Foods</p></div>
+      <div class="categoria"><img src="img/pizza-icon.png" alt="Pizza"><p>Pizza</p></div>
+      <div class="categoria"><img src="img/cafe-icon.png" alt="Café da Manhã"><p>Café da Manhã</p></div>
+      <div class="categoria"><img src="img/saladas-icon.png" alt="Saladas"><p>Saladas</p></div>
+    </div>
+  </section>
+  
+  <div id="carrinhoAba" class="carrinho-lateral">
+    <button id="fecharCarrinho" class="btn">X</button>
+    <h3>Seu Carrinho</h3>
+    <ul id="itensCarrinho"></ul>
+    <p class="entrega-msg">Taxa de entrega: R$ 5,00</p>
+    <p><strong>Total:</strong> R$ <span id="totalCarrinho">0.00</span></p>
+    <button id="btnPagamento" class="btn verde" style="width:100%;margin-top:1rem;" onclick="window.location.href='pagamento.html'">
+    Efetuar pagamento
+  </button>
+
+  
+  </div>
+
+  <section class="restaurantes" id="restaurantes">
+    <h2>Restaurantes Populares</h2>
+    <div class="restaurantes-grid">
+
+      <div class="card">
+        <div class="card-img">
+          <img src="img/chefe-burger.jpg" alt="Hamburguer do Chefe">
+          <div class="card-nome">
+            <a href="restaurantes/Hamburgueria do Chefe/" target="_blank">Hamburguer do Chefe</a>
+          </div>
+        </div>
+        <p><strong>Hambúrguer Artesanal Duplo Bacon</strong></p>
+        <p>Súculento hambúrguer artesanal, coberto com queijo cheddar derretido,
+           fatias generosas de bacon crocante, tudo isso no pão brioche levemente tostado. 
+           Uma explosão de sabor em cada mordida!</p>
+        <span class="preco">R$23,90</span>
+        <button class="btn-carrinho" onclick="adicionarAoCarrinho('Hambúrguer Artesanal Duplo Bacon', 23.90)">
+        <img src="img/cart.png" alt="Icone Carrinho" /> + 
+      </div>
+      
+      <div class="card">
+        <div class="card-img">
+          <img src="img/pizzaria-do-ze-calabresa.jpg" alt="Pizza do Zé">
+          <div class="card-nome">
+            <a href="restaurantes/PizzariaDoSeuZe/" target="_blank">Pizzaria do Seu Zé</a>
+          </div>
+        </div>
+        <p><strong>Calabresa do Seu Zé</strong></p>
+        <p>Rodelas generosas de calabresa levemente douradas, cobertas com muçarela derretida 
+          e cebola em fatias finas. Um clássico irresistível da casa! 
+          <br>Pizza Grande, 8 Fatias</p>
+        <span class="preco">R$37,00</span>
+        <button onclick="adicionarAoCarrinho('Calabresa do Seu Zé', 31.00)" class="btn-carrinho">
+        <img src="img/cart.png" alt="Icone Carrinho" /> + 
+      </div>
+
+      <div class="card">
+        <div class="card-img">
+          <img src="img/marmita-fit.jpg" alt="Marmita Fit">
+          <div class="card-nome">
+            <a href="restaurantes/marmita-saudavel.html" target="_blank">Marmita Saudavel</a> 
+          </div>
+        </div>
+        <p><strong>Marmita Fitness Frango Grelhados</strong></p>
+        <p>Frango grelhado temperado, arroz integral e mix de legumes no vapor.
+            Opção rica em proteínas, ideal para quem busca ganho de massa ou refeições leves e nutritivas</p>
+        <span class="preco">R$24,90</span>
+        <button onclick="adicionarAoCarrinho('Marmita Fitness Frango Grelhado', 24.90)" class="btn-carrinho">
+        <img src="img/cart.png" alt="Icone Carrinho" /> + 
+      </div>
+   
+
+     <div class="card">
+        <div class="card-img">
+          <img src="img/chefe-burguer-smash.jpg" alt="Hamburguer do Chefe">
+          <div class="card-nome">
+            <a href="restaurantes/chefe-burger.html" target="_blank">Hamburguer do Chefe</a>
+          </div>
+        </div>
+        <p><strong>Smash Burguer Artesanal Bacon</strong></p>
+        <p>Súculento smash hambúrguer artesanal, coberto com queijo cheddar derretido,
+           fatias generosas de bacon crocante, tudo isso no pão brioche levemente tostado.
+            Uma explosão de sabor em cada mordida!</p>
+        <span class="preco">R$28,90</span>
+        <button onclick="adicionarAoCarrinho('Smash Burguer Artesanal Bacon', 28.90)" class="btn-carrinho">
+        <img src="img/cart.png" alt="Icone Carrinho" /> </button>
+      </div>
+
+      <div class="card">
+        <div class="card-img">
+          <img src="img/pizzaria-do-ze-brocolis.jpg" alt="Pizza do Zé">
+          <div class="card-nome">
+            <a href="restaurantes/PizzariaDoSeuZe/" target="_blank">Pizzaria do Seu Zé</a>
+          </div>
+        </div>
+        <p><strong>Brócolis com Alho Crocante</strong></p>
+        <p>Brócolis fresquinho no vapor, coberto com muçarela, alho dourado e um fio de azeite — leve,
+           saborosa e cheia de personalidade. <br>
+          Pizza  Média, 6 Fatias</p>
+        <span class="preco">R$34,90</span>
+       <button onclick="adicionarAoCarrinho('Brócolis com Alho Crocante', 34.90)" class="btn-carrinho">
+        <img src="img/cart.png" alt="Icone Carrinho" /> +
+      </div>
+
+      <div class="card">
+        <div class="card-img">
+          <img src="img/marmita-fit.jpg" alt="Marmita Fit">
+          <div class="card-nome">
+            <a href="restaurantes/marmita-saudavel.html" target="_blank">Marmita Saudavel</a> 
+          </div>
+        </div>
+        <p><strong>Marmita Low Carb</strong></p>
+        <p>Tiras de carne ou frango acebolado, couve-flor refogada e abobrinha com brócolis no vapor.
+            Poucos carboidratos, perfeita para dietas low carb ou controle de peso.</p>
+        <span class="preco">R$24,90</span>
+        <button onclick="adicionarAoCarrinho('Marmita Low Carb', 24.90)" class="btn-carrinho">
+        <img src="img/cart.png" alt="Icone Carrinho" /> + 
+      </button>
+      </div>
+ 
+      <div class="card">
+        <div class="card-img">
+          <img src="img/chefe-burguer-trio.png" alt="Hamburgueria do Chefe">
+          <div class="card-nome">
+            <a href="restaurantes/chefe-burger.html" target="_blank">Hamburguer do Chefe</a>
+          </div>
+        </div>
+        <p><strong>Combo Smash Triplo  </strong></p>
+        <p>Três hambúrgueres artesanais smash, queijo cheddar derretido em cada camada e cebola caramelizada 
+          para dar o toque agridoce perfeito, no pão selado na manteiga.</p>
+        <span class="preco">R$43,90</span>
+        <button onclick="adicionarAoCarrinho('Combo Smash Triplo', 43.90)" class="btn-carrinho">
+        <img src="img/cart.png" alt="Icone Carrinho" /> + 
+      </button>
+      </div> 
+
+      <div class="card">
+        <div class="card-img">
+          <img src="img/pizzaria-do-ze-4queijos.png" alt="Pizzaria do Seu Zé">
+          <div class="card-nome">
+            <a href="restaurantes/PizzariaDoSeuZe/" target="_blank">Pizzaria do Seu Zé</a>
+          </div>
+        </div>
+        <p><strong>Pizza 4 queijos do Seu Zé </strong></p>
+        <p>Uma explosão de sabor para os amantes de queijo! Combinação cremosa de mussarela, parmesão, gorgonzola 
+          e catupiry sobre uma massa artesanal leve e crocante. <br>
+          Pizza Família, 12 Fatias.</p>
+        <span class="preco">R$72,90</span>
+        <button onclick="adicionarAoCarrinho('Pizza 4 queijos do Seu Zé', 72.90)" class="btn-carrinho">
+        <img src="img/cart.png" alt="Icone Carrinho" /> +
+      </button>
+      </div> 
+
+      <div class="card">
+        <div class="card-img">
+          <img src="img/marmita-fit-shake.png" alt="Marmita Fit">
+          <div class="card-nome">
+            <a href="restaurantes/marmita-saudavel.html" target="_blank">Marmita Saudavel</a> 
+          </div>
+        </div>
+        <p><strong>Shake Proteico de Chocolate </strong></p>
+        <p>Feito com whey protein sabor chocolate, banana madura e pasta de amendoim natural.
+          Ideal para o pós-treino ou como refeição prática rica em proteínas e sabor.</p>
+        <span class="preco">R$15,90</span>
+        <button onclick="adicionarAoCarrinho('Shake Proteico de Chocolate', 15.90)" class="btn-carrinho">
+        <img src="img/cart.png" alt="Icone Carrinho" /> + 
+      </button>
+      </div> 
+
+      <div class="card">
+        <div class="card-img">
+          <img src="img/chefe-burguer-combo.webp" alt="Hamburguer Artesanal e Fritas">
+          <div class="card-nome">
+            <a href="restaurantes/chefe-burger.html" target="_blank">Hamburguer do Chefe</a>
+          </div>
+        </div>
+        <p><strong>Hamburguer Artesanal e Fritas</strong></p>
+        <p>Suculento hambúrguer artesanal grelhado na hora, acompanhado de batatas fritas douradas e crocantes. 
+          Uma combinação irresistível para qualquer momento!</p>
+        <span class="preco">R$40,00</span>
+        <button onclick="adicionarAoCarrinho('Hamburguer Artesanal e Fritas', 40.00)" class="btn-carrinho">
+        <img src="img/cart.png" alt="Icone Carrinho" /> + 
+      </button>
+      </div> 
+
+      <div class="card">
+        <div class="card-img">
+          <img src="img/pizzaria-do-ze-marguerita.jpg" alt="Pizza Marguerita">
+          <div class="card-nome">
+            <a href="restaurantes/PizzariaDoSeuZe/" target="_blank">Pizzaria do Seu Zé</a>
+          </div>
+        </div>
+        <p><strong>Pizza Marguerita</strong></p>
+        <p>Clássica e deliciosa, nossa Marguerita combina molho de tomate fresco, mussarela derretida 
+          e manjericão aromático sobre uma massa artesanal crocante. Simples, leve e irresistível! <br>
+          Pizza Grande, 8 Fatias.</p>
+        <span class="preco">R$ 45,00</span>
+        <button onclick="adicionarAoCarrinho('Pizza Marguerita', 45.00)" class="btn-carrinho">
+        <img src="img/cart.png" alt="Icone Carrinho" /> + 
+      </button>
+      </div> 
+
+      <div class="card">
+        <div class="card-img">
+          <img src="img/marmita-fit-salada.png" alt="Pizza Marguerita">
+          <div class="card-nome">
+            <a href="restaurantes/marmita-saudavel.html" target="_blank">Marmita Saudavel</a> 
+          </div>
+        </div>
+        <p><strong>Salada com Pedaços Frango</strong></p>
+        <p>Refrescante e nutritiva, nossa salada traz folhas selecionadas combinadas com suculentos pedaços
+           de frango grelhado, finalizada com um toque especial de molho da casa. Leve, saudável e cheia de sabor!</p>
+        <span class="preco">R$ 22,90</span>
+        <button onclick="adicionarAoCarrinho('Hamburguer Artesanal e Fritas', 22.90)" class="btn-carrinho">
+        <img src="img/cart.png" alt="Icone Carrinho" /> + 
+      </button>
+      </div> 
+
+  </section>
+ 
+</div>
+
+  <footer class="footer" id="informacoes">
+    <div class="footer-col">
+      <img src="img/logo.png" alt="Yummy Logo">
+      <p>Compre com segurança e rapidez no Yummy!</p>
+    </div>
+    <div class="footer-col">
+      <h4>Receba ofertas exclusivas</h4>
+      <input type="email" placeholder="Digite seu e-mail">
+      <button class="btn verde" onclick="inscreverNewsletter()">Inscrever</button>
+    </div>
+    <div class="footer-col">
+      <h4>Páginas Legais</h4>
+      <ul>
+        <li><a href="#">Termos de Uso</a></li>
+        <li><a href="#">Política de Privacidade</a></li>
+        <li><a href="#">Sobre o Yummy</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Links Importantes</h4>
+      <ul>
+        <li><a href="#">Ajuda e Suporte</a></li>
+        <li><a href="#">Cadastro de Restaurantes</a></li>
+        <li><a href="#">Seja nosso parceiro</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <div class="bottom-bar">
+    &copy; 2025 Yummy. Todos os direitos reservados.
+  </div>
+
+  
+
+<script src="script.js"></script>
+</body>
+</html>

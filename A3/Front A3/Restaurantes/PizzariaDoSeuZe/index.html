@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pizzaria do Seu Zé | Yummy</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo">
+        <img src="logo.png" alt="Yummy Logo">
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#">Início</a></li>
+          <li><a href="#">Ofertas especiais</a></li>
+          <li><a href="#">Restaurantes</a></li>
+          <li><a href="#">Informações</a></li>
+        </ul>
+      </nav>
+      <div class="login-cadastro">
+        <a href="#">Login</a>
+        <a href="#">Cadastrar</a>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="btn-carrinho" onclick="abrirCarrinho()">
+        🛒 Carrinho <span id="contador-carrinho">0</span>
+      </button>
+    </div>
+  </div>
+  </header>
+
+    <div id="carrinhoAba" class="carrinho-lateral">
+    <button id="fecharCarrinho" class="btn">X</button>
+    <h3>Seu Carrinho</h3>
+    <ul id="itensCarrinho"></ul>
+    <p class="entrega-msg">Taxa de entrega: R$ 5,00</p>
+    <p><strong>Total:</strong> R$ <span id="totalCarrinho">0.00</span></p>
+  </div>
+  <main>
+    
+    <div class="restaurant-logo">
+        <img src="logoZe.png" alt="Logo Pizzaria do Seu Zé">
+      </div>
+
+    <section class="restaurant-info">
+      <div class="restaurant-details">
+        <h1>Pizzaria do seu Zé</h1>
+        <p>Aberta até: 00:00</p>
+        <p>Minimum do Pedido: R$ 15,00</p>
+        <p>Tempo de entrega: 20-35 min</p>
+      </div>
+
+    </section>
+
+    <section class="menu">
+      <h2>Pizzas</h2>
+      <div class="menu-items">
+        <div class="menu-item">
+          <img src="pizzaria-do-ze-calabresa.jpg" alt="Pizza Calabresa">
+          <h3>Calabresa do Seu Zé</h3>
+          <p>Rodelas generosas de calabresa levemente douradas, cobertas com muçarela derretida e cebola em fatias finas. Uma clássica irresistível da casa!</p>
+          <p>Pizza Grande, 8 Fatias</p>
+          <span>R$31.90</span>
+          <button onclick="adicionarAoCarrinho('Calabresa do Seu Zé', 31.90)" class="btn-carrinho">
+            <img src="cart.png" alt="Icone Carrinho" /> + 
+        </div>
+        <div class="menu-item">
+          <img src="pizzaria-do-ze-brocolis.jpg" alt="Pizza Brócolis">
+          <h3>Brócolis com Alho Crocante</h3>
+          <p>Brócolis fresquinho no vapor, coberto com muçarela, alho dourado e um fio de azeite – leve, saboroso e cheio de personalidade.</p>
+          <p>Pizza Média, 6 Fatias</p>
+          <span>R$25.90</span>
+          <button onclick="adicionarAoCarrinho('Brócolis com Alho Crocante', 25.90)" class="btn-carrinho">
+            <img src="cart.png" alt="Icone Carrinho" /> + 
+        </div>
+    
+        <div class="menu-item">
+          <img src="pizzaria-do-ze-4queijos.png" alt="Pizza Quatro Queijos">
+          <h3>Pizza Quatro Queijos</h3>
+          <p>Uma experiência de sabores com queijos cremosos, combinando gorgonzola, parmesão, muçarela e catupiry.</p>
+          <p>Pizza Grande, 8 Fatias</p>
+          <span>R$72.90</span>
+          <button onclick="adicionarAoCarrinho('Pizzas Quatro Queijos', 72.90)" class="btn-carrinho">
+            <img src="cart.png" alt="Icone Carrinho" /> + 
+        </div>
+      </div>
+    </section>
+  </main>
+<footer class="footer" id="informacoes">
+    <div class="footer-col">
+      <img src="logo.png" alt="Yummy Logo">
+      <p>Compre com segurança e rapidez no Yummy!</p>
+    </div>
+    <div class="footer-col">
+      <h4>Receba ofertas exclusivas</h4>
+      <input type="email" placeholder="Digite seu e-mail">
+      <button class="btn verde" onclick="inscreverNewsletter()">Inscrever</button>
+    </div>
+    <div class="footer-col">
+      <h4>Páginas Legais</h4>
+      <ul>
+        <li><a href="#">Termos de Uso</a></li>
+        <li><a href="#">Política de Privacidade</a></li>
+        <li><a href="#">Sobre o Yummy</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Links Importantes</h4>
+      <ul>
+        <li><a href="#">Ajuda e Suporte</a></li>
+        <li><a href="#">Cadastro de Restaurantes</a></li>
+        <li><a href="#">Seja nosso parceiro</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <div class="bottom-bar">
+    &copy; 2025 Yummy. Todos os direitos reservados.
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
