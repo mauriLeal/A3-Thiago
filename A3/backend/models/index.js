@@ -1,73 +1,49 @@
-const sequelize = require('../config/database');
+// models/index.js
 
+'use strict';
 
-const Usuario = require('./usuario');
-const Restaurante = require('./restaurante');
-const Cozinha = require('./cozinha');
-const Produto = require('./produto');
-const Pedido = require('./pedido');
-const ItemPedido = require('./itemPedido');
-const Avaliacao = require('./avaliacao');
-const Estado = require('./estado');
-const Cidade = require('./cidade');
-const Grupo = require('./grupo');
-const Permissao = require('./permissao');
-const FormaPagamento = require('./formaPagamento');
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
+const process = require('process');
+const basename = path.basename(__filename);
+const env = process.env.NODE_ENV || 'development';
 
+// ATENÇÃO: Verifique se o caminho para o arquivo de configuração está correto!
+const config = require(__dirname + '/../config/config.json')[env];
+const db = {};
 
-Restaurante.belongsTo(Cozinha);
-Cozinha.hasMany(Restaurante);
+let sequelize;
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
 
-Restaurante.hasMany(Produto);
-Produto.belongsTo(Restaurante);
+fs
+  .readdirSync(__dirname)
+  .filter(file => {
+    return (
+      file.indexOf('.') !== 0 &&
+      file !== basename &&
+      file.slice(-3) === '.js' &&
+      file.indexOf('.test.js') === -1
+    );
+  })
+  .forEach(file => {
+    // Este é o código que carrega seus modelos da forma correta
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+    db[model.name] = model;
+  });
 
-Pedido.belongsTo(Usuario, { as: 'cliente' });
-Usuario.hasMany(Pedido, { as: 'pedidos', foreignKey: 'clienteId' });
+// Este é o código que executa as associações que você definiu dentro de cada modelo
+Object.keys(db).forEach(modelName => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
 
-Pedido.belongsTo(Restaurante);
-Restaurante.hasMany(Pedido);
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
-Pedido.belongsTo(FormaPagamento);
-FormaPagamento.hasMany(Pedido);
-
-Pedido.hasMany(ItemPedido, { as: 'itens' });
-ItemPedido.belongsTo(Pedido);
-
-ItemPedido.belongsTo(Produto);
-
-Avaliacao.belongsTo(Usuario);
-Avaliacao.belongsTo(Restaurante);
-Restaurante.hasMany(Avaliacao);
-
-Cidade.belongsTo(Estado);
-Estado.hasMany(Cidade);
-
-Restaurante.belongsTo(Cidade, { as: 'enderecoCidade', foreignKey: 'enderecoCidadeId' });
-Pedido.belongsTo(Cidade, { as: 'enderecoEntregaCidade', foreignKey: 'enderecoEntregaCidadeId' });
-
-Restaurante.belongsToMany(FormaPagamento, { through: 'restaurante_formas_pagamento' });
-FormaPagamento.belongsToMany(Restaurante, { through: 'restaurante_formas_pagamento' });
-
-Usuario.belongsToMany(Grupo, { through: 'usuario_grupos' });
-Grupo.belongsToMany(Usuario, { through: 'usuario_grupos' });
-
-Grupo.belongsToMany(Permissao, { through: 'grupo_permissoes' });
-Permissao.belongsToMany(Grupo, { through: 'grupo_permissoes' });
-
-const db = {
-  sequelize,
-  Usuario,
-  Restaurante,
-  Cozinha,
-  Produto,
-  Pedido,
-  ItemPedido,
-  Avaliacao,
-  Estado,
-  Cidade,
-  Grupo,
-  Permissao,
-  FormaPagamento
-};
-
-module.exports = db;                                                                        
+module.exports = db;

@@ -1,20 +1,31 @@
+// models/Cozinha.js
+
+// O 'DataTypes' também é passado como argumento pela função, então não precisa do require.
 const { DataTypes } = require('sequelize');
 
-module.exports = (sequelize) => {
-  const Cozinha = sequelize.define('Cozinha', {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    nome: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
+// A estrutura correta é exportar UMA função que recebe sequelize e DataTypes
+module.exports = (sequelize, DataTypes) => { 
+   const Cozinha = sequelize.define('Cozinha', {
+      nome: {
+        type: DataTypes.STRING,
+        allowNull: false
+},
   }, {
     tableName: 'cozinhas',
     timestamps: false,
-  });
+ });
 
-  return Cozinha;
+  // Bloco para definir as associações do modelo Cozinha
+  Cozinha.associate = (models) => {
+    // Exemplo: Uma Cozinha TEM MUITOS Restaurantes
+    Cozinha.hasMany(models.Restaurante, {
+      foreignKey: 'cozinhaId',
+      as: 'restaurantes'
+    });
+  };
+
+  // A função precisa RETORNAR o modelo definid
+  return Cozinha; 
 };
+
+// REMOVA a linha "module.exports = Cozinha;" daqui de baixo.
