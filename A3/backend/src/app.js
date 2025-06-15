@@ -5,6 +5,7 @@ const db = require('../models');
 
 // 1. Importação das rotas que vamos usar
 const authRoutes = require('../routes/authRoutes');
+const restauranteRoutes = require('../routes/restauranteRoutes')
 // const restauranteRoutes = require('./routes/restauranteRoutes'); // Exemplo para quando for criar
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.json());
 // Aqui dizemos ao Express: "Toda requisição que começar com '/auth', 
 // deve ser gerenciada pelo nosso 'authRoutes'".
 app.use('/auth', authRoutes);
+app.use('/restaurante',restauranteRoutes)
 // app.use('/restaurantes', restauranteRoutes); // Exemplo para quando for criar
 
 // Rota principal para um teste rápido de saúde da API

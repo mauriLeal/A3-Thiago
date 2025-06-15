@@ -32,6 +32,7 @@ const Usuario = sequelize.define('Usuario', {
 Usuario.associate = (models) => {
   // Exemplo: Um usuário pode ter muitos pedidos
   // Usuario.hasMany(models.Pedido, { foreignKey: 'clienteId' });
+    Usuario.hasMany(models.Restaurante,{as:'restauranteGerenciados',foreignKey:'responsavelId'});
 };
 
 // ✅ A exportação no final deve estar correta

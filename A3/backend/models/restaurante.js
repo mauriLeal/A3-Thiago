@@ -63,6 +63,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'restauranteId',
         as: 'formasPagamento'
     });
+    Restaurante.belongsTo(models.Usuario, {
+      as:'responsavel',
+      foreignKey:'responsavelId'
+    });
   };
 
   return Restaurante;
