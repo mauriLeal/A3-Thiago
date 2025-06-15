@@ -34,6 +34,10 @@ module.exports = (sequelize, DataTypes) => {
     dataCancelamento: {
       type: DataTypes.DATE,
       allowNull: true
+    },
+    categoria: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   }, {
     tableName: 'pedidos',

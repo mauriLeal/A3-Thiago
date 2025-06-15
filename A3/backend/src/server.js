@@ -1,8 +1,3 @@
-// src/server.js
-
-require('dotenv').config(); // <-- ✅ ADICIONE ESTA LINHA NO TOPO DE TUDO
-
-const express = require('express');
 // 1. Importa a aplicação Express totalmente configurada do arquivo app.js
 const app = require('./app');
 
@@ -10,8 +5,6 @@ const app = require('./app');
 // Ele tenta pegar a porta de uma variável de ambiente (útil para produção/deploy)
 // ou usa a porta 3000 como padrão.
 const PORT = process.env.PORT || 3000;
-
-
 
 // 3. Inicia o servidor.
 // O método .listen() "liga" o servidor e o faz esperar por conexões na porta definida.

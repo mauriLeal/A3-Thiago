@@ -1,22 +1,25 @@
-// src/app.js
-
 const express = require('express');
 const db = require('../models');
-
-// --- AQUI ESTÁ A CORREÇÃO ---
-// 1. Importamos o ROTEADOR PRINCIPAL, e não mais rotas individuais.
-const routes = require('../routes'); // O Node.js entende que isso aponta para 'routes/index.js'
+const usuarioRoutes = require('../routes/usuarios');
+// 1. Importação das rotas que vamos usar
+const authRoutes = require('../routes/authRoutes');
+const pedidoRoutes = require('../routes/pedidos');
+const carrinhoRoutes = require('../routes/carrinhos');
 
 const app = express();
 
-// 2. Configuração de Middlewares (continua igual)
+// 2. Configuração de Middlewares
+// Este middleware é essencial para que sua API consiga entender o formato JSON
+// que será enviado no corpo das requisições POST, PUT, etc.
 app.use(express.json());
 
-// --- E AQUI ---
-// 3. Conexão do Roteador Principal com um prefixo /api
-// Esta única linha conecta TODAS as suas rotas (auth, usuarios, pedidos, etc.)
-app.use('/api', routes);
-
+// 3. Conexão das Rotas
+// Aqui dizemos ao Express: "Toda requisição que começar com '/auth', 
+// deve ser gerenciada pelo nosso 'authRoutes'".
+app.use('/auth', authRoutes);
+app.use('/pedidos', pedidoRoutes);
+app.use('/carrinhos', carrinhoRoutes);
+app.use('/usuarios', usuarioRoutes);
 // Rota principal para um teste rápido de saúde da API
 app.get('/', (req, res) => {
     res.send('API de Delivery de Comida está no ar! 🚀');
@@ -29,5 +32,6 @@ db.sequelize.sync().then(() => {
 });
 
 
-// 4. Exportação (continua igual)
+// 4. Exportação
+// Exportamos a aplicação configurada para que o server.js possa usá-la.
 module.exports = app;

@@ -5,38 +5,45 @@
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
-const sequelize = require('../config/database'); // Usando nossa configuração manual para SQLite
+const process = require('process');
 const basename = path.basename(__filename);
+const env = process.env.NODE_ENV || 'development';
+
+// ATENÇÃO: Verifique se o caminho para o arquivo de configuração está correto!
+const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
-// Lê todos os arquivos da pasta 'models' dinamicamente
+let sequelize;
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
+
 fs
   .readdirSync(__dirname)
   .filter(file => {
-    // A condição de filtro garante que pegamos apenas os arquivos de modelo .js
     return (
       file.indexOf('.') !== 0 &&
       file !== basename &&
-      file.slice(-3) === '.js'
+      file.slice(-3) === '.js' &&
+      file.indexOf('.test.js') === -1
     );
   })
   .forEach(file => {
-    // Importa cada modelo e o adiciona ao nosso objeto 'db'
-    // Esta linha é diferente da sua, pois nossos modelos não usam o padrão do CLI
-    const model = require(path.join(__dirname, file));
+    // Este é o código que carrega seus modelos da forma correta
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
     db[model.name] = model;
   });
 
-// Percorre todos os modelos carregados e executa a função 'associate' se ela existir
+// Este é o código que executa as associações que você definiu dentro de cada modelo
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
 });
 
-// Adiciona a instância do sequelize e a classe Sequelize ao objeto 'db'
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-// Exporta o objeto 'db' com todos os modelos e a conexão
 module.exports = db;

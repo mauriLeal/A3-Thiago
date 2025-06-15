@@ -1,78 +1,61 @@
-// controllers/authController.js
-
-const db = require('../models');
+// Importa o nosso objeto 'db' que contém a instância do sequelize
+const db = require('../models'); 
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 
-// --- FUNÇÃO DE CADASTRO (com 'exports.') ---
+// Função para o caso de uso: "Cadastro do usuário"
 exports.cadastrar = async (req, res) => {
   try {
+    // 1. Extrair dados do corpo da requisição (o JSON enviado pelo cliente)
     const { nome, email, senha } = req.body;
 
+    // 2. Validar se os dados essenciais foram recebidos
     if (!nome || !email || !senha) {
-      return res.status(400).json({ error: 'Requisição inválida. Por favor, forneça nome, email e senha.' });
+      return res.status(400).json({ 
+        error: 'Requisição inválida. Por favor, forneça nome, email e senha.' 
+      });
     }
 
-    const usuarioExistente = await db.Usuario.findOne({ where: { email } });
+    // 3. Verificar se o e-mail já existe no banco para evitar duplicados
+    const sqlSelect = 'SELECT id FROM usuarios WHERE email = ? LIMIT 1';
+    const [usuariosExistentes] = await db.sequelize.query(sqlSelect, {
+      replacements: [email],
+      type: db.sequelize.QueryTypes.SELECT
+    });
 
-    if (usuarioExistente) {
+    if (usuariosExistentes) {
+      // Usamos o status 409 Conflict para indicar que o recurso já existe
       return res.status(409).json({ error: 'Este e-mail já está em uso.' });
     }
 
+    // 4. Criptografar a senha antes de salvar (NUNCA salve senhas em texto puro)
+    // O '10' é o "custo" do hash, um bom valor padrão de segurança.
     const senhaHash = await bcrypt.hash(senha, 10);
+    const now = new Date(); // Para os campos createdAt e updatedAt
 
-    const novoUsuario = await db.Usuario.create({
-      nome,
-      email,
-      senha: senhaHash,
+    // 5. Inserir o novo usuário no banco de dados usando SQL puro
+    const sqlInsert = `
+      INSERT INTO usuarios (nome, email, senha, createdAt, updatedAt) 
+      VALUES (?, ?, ?, ?, ?)
+    `;
+
+    // A query de INSERT retorna um array [id, numeroDeLinhasAfetadas]
+    const [userId] = await db.sequelize.query(sqlInsert, {
+      replacements: [nome, email, senhaHash, now, now],
+      type: db.sequelize.QueryTypes.INSERT
     });
 
-    novoUsuario.senha = undefined;
-    res.status(201).json(novoUsuario);
+    // 6. Enviar a resposta de sucesso
+    // Retornamos o status 201 Created, que é o correto para criação de recursos.
+    // Enviamos de volta os dados do usuário criado (sem a senha, claro).
+    res.status(201).json({
+      id: userId,
+      nome: nome,
+      email: email
+    });
 
   } catch (error) {
+    // Em caso de qualquer outro erro, enviamos uma resposta genérica de erro do servidor
     console.error('Erro no cadastro de usuário:', error);
-    res.status(500).json({ error: 'Ocorreu um erro inesperado no servidor.' });
-  }
-};
-
-
-// --- FUNÇÃO DE LOGIN (com 'exports.') ---
-exports.login = async (req, res) => {
-  try {
-    const { email, senha } = req.body;
-
-    if (!email || !senha) {
-      return res.status(400).json({ error: 'E-mail e senha são obrigatórios.' });
-    }
-
-    const usuario = await db.Usuario.findOne({ where: { email } });
-
-    if (!usuario) {
-      return res.status(401).json({ error: 'Credenciais inválidas.' });
-    }
-
-    const senhaValida = await bcrypt.compare(senha, usuario.senha);
-
-    if (!senhaValida) {
-      return res.status(401).json({ error: 'Credenciais inválidas.' });
-    }
-
-    const payload = { id: usuario.id, email: usuario.email };
-
-    const token = jwt.sign(
-      payload,
-      process.env.JWT_SECRET,
-      { expiresIn: '8h' }
-    );
-
-    res.status(200).json({
-      message: 'Login bem-sucedido!',
-      token: token,
-    });
-
-  } catch (error) {
-    console.error('Erro no login:', error);
     res.status(500).json({ error: 'Ocorreu um erro inesperado no servidor.' });
   }
 };
