@@ -1,44 +1,39 @@
 // models/produto.js
 
-module.exports = (sequelize, DataTypes) => {
-  const Produto = sequelize.define('Produto', {
-    nome: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    descricao: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    preco: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
-    },
-    // A coluna 'restauranteId' será criada automaticamente pela associação abaixo.
-  }, {
-    tableName: 'produtos',
-    timestamps: false,
-  });
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
 
-  Produto.associate = (models) => {
-    // Define que um Produto PERTENCE A UM Restaurante.
-    Produto.belongsTo(models.Restaurante, {
-      foreignKey: 'restauranteId',
-      as: 'restaurante'
-    });
+// ✅ O nome aqui deve ser 'Produto', com 'P' maiúsculo.
+const Produto = sequelize.define('Produto', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  nome: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  descricao: {
+    type: DataTypes.TEXT, // TEXT é melhor para descrições longas
+    allowNull: true,
+  },
+  preco: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false,
+  },
+  // O Sequelize adiciona a chave estrangeira 'restauranteId' automaticamente
+  // por causa da associação definida abaixo.
+}, {
+  tableName: 'produtos',
+  timestamps: true,
+});
 
-    // Define que um Produto PODE TER MUITOS Itens de Pedido.
-    Produto.hasMany(models.ItemPedido, {
-      foreignKey: 'produtoId',
-      as: 'itensPedido'
-    });
-
-    // Define que um Produto PODE TER UMA Foto.
-    Produto.hasOne(models.FotoProduto, {
-        foreignKey: 'produtoId',
-        as: 'foto'
-    });
-  };
-
-  return Produto;
+// Define a associação deste modelo
+Produto.associate = (models) => {
+  // Um Produto pertence a um Restaurante
+  Produto.belongsTo(models.Restaurante, { foreignKey: 'restauranteId' });
 };
+
+// ✅ A exportação no final deve estar correta
+return Produto;

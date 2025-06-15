@@ -9,7 +9,7 @@ const storagePath = path.join(
   __dirname,              // Pega o caminho absoluto da pasta atual (que é a pasta 'config')
   '..',                   // Volta um nível de pasta (para a pasta 'backend')
   'database',             // Entra na pasta 'database'
-  'database.sqlite'       // Aponta para o nome do arquivo
+  'development.sqlite'       // Aponta para o nome do arquivo
 );
 
 // Cria a instância do Sequelize para SQLite

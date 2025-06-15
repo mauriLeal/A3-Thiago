@@ -1,58 +1,48 @@
-module.exports = (sequelize, DataTypes) => {
-  const Pedido = sequelize.define('Pedido', {
-    codigo: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      unique: true,
-      allowNull: false
-    },
-    subtotal: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false
-    },
-    taxaFrete: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false
-    },
-    valorTotal: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false
-    },
-    status: {
-      type: DataTypes.ENUM('CRIADO', 'CONFIRMADO', 'ENTREGUE', 'CANCELADO'),
-      defaultValue: 'CRIADO',
-      allowNull: false
-    },
-    dataConfirmacao: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    dataEntrega: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    dataCancelamento: {
-      type: DataTypes.DATE,
-      allowNull: true
-    }
-  }, {
-    tableName: 'pedidos',
-    timestamps: true
-  });
+// models/pedido.js
 
-  Pedido.associate = (models) => {
-    // Relação com o usuário que fez o pedido
-    Pedido.belongsTo(models.Usuario, { foreignKey: 'clienteId', as: 'cliente' });
-    
-    // Relação com o restaurante que recebeu o pedido
-    Pedido.belongsTo(models.Restaurante, { foreignKey: 'restauranteId' });
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
 
-    // Relação com a forma de pagamento utilizada
-    Pedido.belongsTo(models.FormaPagamento, { foreignKey: 'formaPagamentoId' });
+// ✅ O nome aqui deve ser 'Pedido', com 'P' maiúsculo.
+const Pedido = sequelize.define('Pedido', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  valorTotal: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false,
+  },
+  status: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: 'CRIADO', // Exemplo de status inicial
+  },
+  // As chaves estrangeiras (clienteId, restauranteId, etc.)
+  // serão adicionadas automaticamente pelas associações abaixo.
+}, {
+  tableName: 'pedidos',
+  timestamps: true,
+});
 
-    // Relação com os itens do pedido
-    Pedido.hasMany(models.ItemPedido, { foreignKey: 'pedidoId', as: 'itens' });
-  };
+// Define as associações deste modelo
+Pedido.associate = (models) => {
+  // Um Pedido pertence a um Cliente (Usuário)
+  Pedido.belongsTo(models.Usuario, { as: 'cliente', foreignKey: 'clienteId' });
 
-  return Pedido;
+  // Um Pedido pertence a um Restaurante
+  Pedido.belongsTo(models.Restaurante, { foreignKey: 'restauranteId' });
+  
+  // Um Pedido tem um Endereço de Entrega
+  Pedido.belongsTo(models.Endereco, { as: 'enderecoEntrega', foreignKey: 'enderecoId' });
+
+  // Um Pedido tem uma Forma de Pagamento
+  Pedido.belongsTo(models.FormaPagamento, { foreignKey: 'formaPagamentoId' });
+
+  // Um Pedido tem muitos Itens de Pedido
+  Pedido.hasMany(models.ItemPedido, { as: 'itens', foreignKey: 'pedidoId' });
 };
+
+// ✅ A exportação no final deve estar correta
+return Pedido;

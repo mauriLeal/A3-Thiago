@@ -1,24 +1,35 @@
-// models/Estado.js
+// models/estado.js
 
-module.exports = (sequelize, DataTypes) => {
-  const Estado = sequelize.define('Estado', {
-    nome: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    }
-  }, {
-    tableName: 'estados',
-    timestamps: false
-  });
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
 
-  // Um Estado pode ter várias cidades associadas a ele.
-  Estado.associate = (models) => {
-    Estado.hasMany(models.Cidade, {
-      foreignKey: 'estadoId',
-      as: 'cidades'
-    });
-  };
+// ✅ Nome do modelo com 'E' maiúsculo
+const Estado = sequelize.define('Estado', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  nome: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  uf: {
+    type: DataTypes.STRING(2),
+    allowNull: false,
+    unique: true,
+  },
+}, {
+  tableName: 'estados',
+  timestamps: false,
+});
 
-  return Estado;
+// Define as associações deste modelo
+Estado.associate = (models) => {
+  // Um Estado pode ter muitas Cidades
+  Estado.hasMany(models.Cidade, { foreignKey: 'estadoId' });
 };
+
+// ✅ Exportação correta no final
+return Estado;

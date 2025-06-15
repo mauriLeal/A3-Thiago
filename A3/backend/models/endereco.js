@@ -1,52 +1,23 @@
-// models/Endereco.js
+// models/endereco.js
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
 
-module.exports = (sequelize, DataTypes) => {
-  const Endereco = sequelize.define('Endereco', {
-    cep: {
-      type: DataTypes.STRING(9),
-      allowNull: false
-    },
-    logradouro: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    numero: {
-      type: DataTypes.STRING(20),
-      allowNull: true
-    },
-    complemento: {
-      type: DataTypes.STRING(100),
-      allowNull: true
-    },
-    bairro: {
-      type: DataTypes.STRING,
-      allowNull: false
-    }
-    // As colunas 'cidadeId', 'restauranteId' e 'pedidoId'
-    // serão criadas automaticamente pelas associações abaixo.
-  }, {
-    tableName: 'enderecos',
-    timestamps: false
-  });
+const Endereco = sequelize.define('Endereco', {
+  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+  cep: { type: DataTypes.STRING, allowNull: false },
+  logradouro: { type: DataTypes.STRING, allowNull: false },
+  numero: { type: DataTypes.STRING, allowNull: true },
+  complemento: { type: DataTypes.STRING, allowNull: true },
+  bairro: { type: DataTypes.STRING, allowNull: false },
+}, {
+  tableName: 'enderecos',
+  timestamps: true,
+});
 
-  // Define todas as associações deste modelo aqui
-  Endereco.associate = (models) => {
-    
-    // Associação com Restaurante
-    Endereco.belongsTo(models.Restaurante, {
-      foreignKey: 'restauranteId'
-    });
-
-    // Associação com Cidade
-    Endereco.belongsTo(models.Cidade, { // Verifique se o nome do modelo é 'Cidade'
-      foreignKey: 'cidadeId'
-    });
-
-    // Associação com Pedido
-    Endereco.belongsTo(models.Pedido, { // Verifique se o nome do modelo é 'Pedido'
-      foreignKey: 'pedidoId'
-    });
-  };
-
-  return Endereco;
+Endereco.associate = (models) => {
+  Endereco.belongsTo(models.Cidade, { foreignKey: 'cidadeId' });
+  // Um endereço pode estar em muitos pedidos
+  Endereco.hasMany(models.Pedido, { as: 'enderecoEntrega', foreignKey: 'enderecoId' });
 };
+
+return Endereco;
