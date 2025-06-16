@@ -1,33 +1,32 @@
-// models/Cidade.js
+// models/cidade.js
 
-module.exports = (sequelize, DataTypes) => {
-  const Cidade = sequelize.define('Cidade', {
-    nome: {
-      type: DataTypes.STRING,
-      allowNull: false
-    }
-    // A coluna 'estadoId' será criada pela associação abaixo
-  }, {
-    tableName: 'cidades',
-    timestamps: false
-  });
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
 
-  // AQUI DEFINIMOS AS RELAÇÕES DO MODELO CIDADE
-  Cidade.associate = (models) => {
-    
-    // Relação 1: Uma Cidade PERTENCE A UM Estado.
-    // Isso cria a coluna 'estadoId'.
-    Cidade.belongsTo(models.Estado, { // ATENÇÃO: O nome do modelo deve ser 'Estado'
-      foreignKey: 'estadoId'
-    });
+// ✅ Nome do modelo com 'C' maiúsculo
+const Cidade = sequelize.define('Cidade', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  nome: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  // A chave estrangeira 'estadoId' será adicionada pela associação
+}, {
+  tableName: 'cidades',
+  timestamps: false,
+});
 
-    // Relação 2: Uma Cidade TEM MUITOS Endereços.
-    // Isso cria a chave estrangeira em 'Endereco'.
-    Cidade.hasMany(models.Endereco, {
-      foreignKey: 'cidadeId',
-      as: 'enderecos'
-    });
-  };
-
-  return Cidade;
+// Define as associações deste modelo
+Cidade.associate = (models) => {
+  // Uma Cidade pertence a um Estado
+  Cidade.belongsTo(models.Estado, { foreignKey: 'estadoId' });
+  // Uma Cidade pode ter muitos Endereços
+  Cidade.hasMany(models.Endereco, { foreignKey: 'cidadeId' });
 };
+
+// ✅ Exportação correta no final
+return Cidade;
